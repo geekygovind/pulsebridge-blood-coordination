@@ -1,0 +1,5 @@
+﻿{% extends "blood_bank/index.html" %}
+{% block title %}Blood bank dashboard | PulseBridge{% endblock %}
+{% block content %}
+<div class="welcome-section"><h2>Blood bank inventory desk</h2><p>Keep current stock accurate so patients and hospitals can find the right unit faster.</p></div><div class="dashboard-cards"><div class="card"><div class="card-icon"><i class="fa-solid fa-boxes-stacked"></i></div><h3>{{ inventory_count }} available units</h3><p>Total active inventory across registered blood banks.</p><a class="card-btn" href="{% url 'blood_bank:availability' %}">View availability</a></div><div class="card"><div class="card-icon"><i class="fa-solid fa-plus"></i></div><h3>Add inventory</h3><p>Record a new blood component, donation date, expiry date, and stock level.</p><a class="card-btn" href="{% url 'blood_bank:update' %}">Add units</a></div></div>
+{% endblock %}

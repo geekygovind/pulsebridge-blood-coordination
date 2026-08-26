@@ -1,0 +1,37 @@
+{% extends "blood_bank/index.html" %}
+
+{% block title %}Patient Login - HealthCare{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>Patient Login</h2>
+   
+    <div class="login-form">
+        <form action="/Verify" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Patient Name</label>
+                <input type="text" id="username" placeholder="Enter your Name" required>
+            </div>
+            
+            <div class="form-group">
+               <label for="password">Password :</label><br>
+                <input type="password" id="password" placeholder="Enter your Password" required>
+             </div>
+            <button type="submit" class="submit-btn">Login to Dashboard</button>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                <p>Don't have an account? <a href="register.html" style="color: #e53935;">Register</a></p>
+            </div>
+
+              {% if messages %}
+            {% for message in messages %}
+            <p style="color:red;text-align:center;margin-top: 20px;">{{ message }}</p>
+           {% endfor %}
+             {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,5 @@
+﻿{% extends "patient/index.html" %}
+{% block title %}Patient dashboard | PulseBridge{% endblock %}
+{% block content %}
+<div class="welcome-section"><h2>Welcome to your patient dashboard</h2><p>Search availability, register as a donor, and stay connected to the blood-care network.</p></div><div class="dashboard-cards"><div class="card"><div class="card-icon"><i class="fas fa-search"></i></div><h3>Check blood availability</h3><p>Find available blood groups and quantities at connected blood banks.</p><a href="{% url 'patient:availability' %}" class="card-btn">Search inventory</a></div><div class="card"><div class="card-icon"><i class="fas fa-heart"></i></div><h3>Become a donor</h3><p>Add your blood group and contact details to help when a patient needs you.</p><a href="{% url 'patient:donor_register' %}" class="card-btn">Register as donor</a></div></div>
+{% endblock %}

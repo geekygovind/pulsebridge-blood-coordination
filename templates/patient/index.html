@@ -1,0 +1,489 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Patient Dashboard{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f9f4f4; /* Very light red background */
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* Header and Navigation */
+      header {
+        background-color: #fff;
+        box-shadow: 0 2px 15px rgba(200, 100, 100, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo i {
+        color: #e53935;
+        font-size: 28px;
+        margin-right: 10px;
+      }
+
+      .logo h1 {
+        color: #d32f2f;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .logo span {
+        color: #333;
+        font-weight: 300;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 30px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: #555;
+        font-weight: 500;
+        font-size: 16px;
+        padding: 8px 0;
+        position: relative;
+        transition: color 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: #e53935;
+      }
+
+      nav ul li a.active {
+        color: #e53935;
+      }
+
+      nav ul li a.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #e53935;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 40px 0;
+        min-height: 70vh;
+      }
+
+      .welcome-section {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(200, 100, 100, 0.08);
+        margin-bottom: 30px;
+        border-left: 4px solid #e53935;
+      }
+
+      .welcome-section h2 {
+        color: #d32f2f;
+        margin-bottom: 10px;
+      }
+
+      .welcome-section p {
+        color: #666;
+        max-width: 800px;
+      }
+
+      /* Dashboard Cards */
+      .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+
+      .card {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(200, 100, 100, 0.08);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        border-top: 3px solid #e53935;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(200, 100, 100, 0.12);
+      }
+
+      .card-icon {
+        background-color: #ffebee;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .card-icon i {
+        font-size: 24px;
+        color: #e53935;
+      }
+
+      .card h3 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+
+      .card p {
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .card-btn {
+        display: inline-block;
+        background-color: #ffebee;
+        color: #e53935;
+        padding: 8px 18px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+
+      .card-btn:hover {
+        background-color: #e53935;
+        color: white;
+      }
+
+      /* Sections */
+      .section {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(200, 100, 100, 0.08);
+        margin-bottom: 30px;
+      }
+
+      .section h2 {
+        color: #d32f2f;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ffebee;
+      }
+
+      /* Login Form */
+      .login-form {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #e53935;
+        outline: none;
+      }
+
+      .submit-btn {
+        background-color: #e53935;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+      }
+
+      .submit-btn:hover:not(:disabled) {
+        background-color: #c62828;
+      }
+
+      .submit-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      /* Time slots in availability */
+      .time-slot {
+        background-color: #ffebee;
+        padding: 12px;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .time-slot:hover {
+        background-color: #f8d7da;
+      }
+
+      .time-slot.selected {
+        background-color: #e53935;
+        color: white;
+        font-weight: bold;
+      }
+
+      /* Team cards */
+      .team-card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(200, 100, 100, 0.08);
+        transition: transform 0.3s;
+      }
+
+      .team-card:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Footer */
+      footer {
+        background-color: #333;
+        color: #fff;
+        padding: 40px 0 20px;
+        margin-top: 40px;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .footer-column h3 {
+        color: #ffebee;
+        margin-bottom: 20px;
+        font-size: 20px;
+      }
+
+      .footer-column p,
+      .footer-column a {
+        color: #ccc;
+        margin-bottom: 10px;
+        display: block;
+        text-decoration: none;
+      }
+
+      .footer-column a:hover {
+        color: #fff;
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #444;
+        color: #aaa;
+        font-size: 14px;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: column;
+          padding: 15px 0;
+        }
+
+        nav ul {
+          margin-top: 20px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        nav ul li {
+          margin: 5px 15px;
+        }
+
+        .welcome-section,
+        .section,
+        .card {
+          padding: 20px;
+        }
+
+        .dashboard-cards {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <!-- Header with Navigation -->
+    <header>
+      <div class="container">
+        <div class="nav-container">
+          <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <h1>Life<span> Link</span></h1>
+          </div>
+
+          <nav>
+            <ul>
+              <li>
+                <a
+                  href="{% url 'patient:home' %}"
+                  class="{% if active_page == 'home' %}active{% endif %}"
+                >
+                  Home
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="{% url 'patient:login' %}"
+                  class="{% if active_page == 'login' %}active{% endif %}"
+                >
+                  Login
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="{% url 'patient:availability' %}"
+                  class="{% if active_page == 'availability' %}active{% endif %}"
+                >
+                  Check Availability
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="{% url 'patient:about' %}"
+                  class="{% if active_page == 'about' %}active{% endif %}"
+                >
+                  About Us
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="{% url 'patient:contact' %}"
+                  class="{% if active_page == 'contact' %}active{% endif %}"
+                >
+                  Contact Us
+                </a>
+              </li>
+              <li><a href="{% url 'admin:index' %}">Admin Panel</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container main-content">{% if messages %}{% for message in messages %}<div style="margin-bottom:18px;padding:12px 15px;border-radius:6px;background:#ffebee;color:#b71c1c">{{ message }}</div>{% endfor %}{% endif %}
+      {% block content %}
+      <!-- Page specific content goes here -->
+      {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>Life Link Dashboard</h3>
+            <p>
+              Your comprehensive patient portal for managing healthcare needs
+              and appointments.
+            </p>
+          </div>
+
+          <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="{% url 'patient:home' %}">Home</a>
+            <a href="{% url 'patient:login' %}">Login</a>
+            <a href="{% url 'patient:availability' %}">Check Availability</a>
+            <a href="{% url 'patient:about' %}">About Us</a>
+            <a href="{% url 'patient:contact' %}">Contact Us</a>
+          </div>
+
+          <div class="footer-column">
+            <h3>Contact Info</h3>
+            <p>123 Health Street, Medical City</p>
+            <p>Phone: (123) 456-7890</p>
+            <p>Email: info@healthcare.com</p>
+          </div>
+        </div>
+
+        <div class="copyright">
+          <p>Created by Govind Singh · 2026</p>
+        </div>
+      </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>
+
+
+
+
+
