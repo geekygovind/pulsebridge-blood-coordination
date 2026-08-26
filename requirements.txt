@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 Django==4.2.11
 gunicorn==23.0.0
 whitenoise[brotli]==6.8.2
+=======
+Django
+gunicorn
+>>>>>>> 06d6022a2858d4ae3794a884900e0f5a4ad16cf1
